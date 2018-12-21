@@ -129,11 +129,8 @@ function commandPromise(string $command, string $path, LoopInterface $loop)
     });
 
     $process->stdout->on('end', function ()  use ($deferred, $command){
+        echo PHP_EOL, "Finish action: ${command}", PHP_EOL;
         $deferred->resolve();
-    });
-
-    $process->on('exit', function($exitCode, $termSignal) use ($command){
-        echo PHP_EOL, "Finish action: ${command} with ecit code: ${exitCode}", PHP_EOL;
     });
 
     return $deferred->promise();
