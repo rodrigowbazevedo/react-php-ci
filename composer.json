@@ -1,0 +1,14 @@
+{
+    "name": "rodrigowba/projects-manager",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rodrigo Azevedo",
+            "email": "rodrigowbazevedo@yahoo.com.br"
+        }
+    ],
+    "require": {
+        "react/http": "^0.8.3"
+    }
+}
