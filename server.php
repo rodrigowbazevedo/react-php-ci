@@ -26,10 +26,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $rout
 
         $repository = $data->repository->full_name;
         $branch = $data->push->changes[0]->new->name;
+        $author = $data->push->changes[0]->new->target->author->raw;
+        $commit = $data->push->changes[0]->new->target->message;
 
         $logger->info('Web Hook Received', [
             'Repository' => $repository,
-            'Branch' => $branch
+            'Branch' => $branch,
+            'Commit' => $commit,
+            'Autor' => $author
         ]);
 
         $projects = $findProjects($repository, $branch);

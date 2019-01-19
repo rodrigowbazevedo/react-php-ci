@@ -38,10 +38,24 @@ class ProcessQueue
 
         $process->run($this->loop)->then(
             function(ProcessOutput $output) use ($process){
-                $this->logger->info('Command Output', [
-                    'Command' => $process->getCommand(),
-                    'Output' => $output->stdout
-                ]);
+
+                $chunks = str_split($output->stdout, 1400);
+                $chunksCount = sizeof($chunk);
+
+                foreach($chunks as $i => $chunk){
+                    $context = [
+                        'Command' => $process->getCommand(),
+                        'Output' => $chunk
+                    ];
+
+                    if($chunksCount > 1){
+                        $part = $i + 1;
+
+                        $context['Part'] = "{$part} de {$chunksCount}";
+                    }
+
+                    $this->logger->info('Command Output', $context);
+                }
 
                 if(!$this->queue->isEmpty()){
                     $this->run();
