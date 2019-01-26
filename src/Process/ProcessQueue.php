@@ -36,16 +36,20 @@ class ProcessQueue
     {
         $process = $this->queue->dequeue();
 
+        $this->logger->info('Starting Command', [
+            'Command' => $process->getCommand(),
+        ]);
+
         $process->run($this->loop)->then(
             function(ProcessOutput $output) use ($process){
 
-                $chunks = str_split($output->stdout, 1400);
-                $chunksCount = sizeof($chunk);
+                $chunks = str_split($output->stdout, 1800);
+                $chunksCount = sizeof($chunks);
 
                 foreach($chunks as $i => $chunk){
                     $context = [
                         'Command' => $process->getCommand(),
-                        'Output' => $chunk
+                        'Output' => [$chunk]
                     ];
 
                     if($chunksCount > 1){
