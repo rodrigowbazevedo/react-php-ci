@@ -49,7 +49,7 @@ class ProcessQueue
                 foreach($chunks as $i => $chunk){
                     $context = [
                         'Command' => $process->getCommand(),
-                        'Output' => [$chunk]
+                        'Output' => $chunk
                     ];
 
                     if($chunksCount > 1){
